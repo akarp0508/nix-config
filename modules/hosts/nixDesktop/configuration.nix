@@ -6,6 +6,7 @@
     imports =
       [
         self.nixosModules.desktopHardware
+        self.nixosModules.niri
       ];
 
     # Bootloader.
@@ -105,11 +106,8 @@
       curl
       kitty
       home-manager
+      zed-editor
     ];
-
-    programs.zed-editor = {
-      enable = true;
-    };
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
