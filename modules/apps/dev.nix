@@ -1,7 +1,7 @@
 { ... }: {
   # Development tooling.
   flake.nixosModules.appsDev = { config, lib, pkgs, ... }: {
-    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, home-manager, IntelliJ IDEA + Java toolchain)";
+    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, home-manager, IntelliJ IDEA + Java toolchain, Python)";
 
     config = lib.mkIf config.apps.dev.enable {
       environment.systemPackages = with pkgs; [
@@ -14,6 +14,11 @@
         jdk25
         maven
         gradle
+
+        # Python. NixOS's python3 is immutable (no system-wide pip install),
+        # so uv is the escape hatch for per-project venvs/dependencies.
+        python3
+        uv
       ];
 
       # nixpkgs' maven/gradle bake in their own JDK dependency internally and
