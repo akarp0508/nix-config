@@ -94,6 +94,17 @@
 
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
+        # Ask clients to skip drawing their own titlebar. clip-to-geometry +
+        # draw-border-with-background keep windows that still draw their own
+        # shadow/corners (despite agreeing to drop CSD) from looking broken.
+        prefer-no-csd = _: { };
+        window-rules = [
+          {
+            clip-to-geometry = true;
+            draw-border-with-background = false;
+          }
+        ];
+
         input.keyboard.xkb.layout = "pl";
 
         layout.gaps = 5;
