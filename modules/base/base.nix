@@ -10,6 +10,7 @@
       self.nixosModules.locale
       self.nixosModules.bootloader
       self.nixosModules.networkmanager
+      self.nixosModules.nixLd
     ];
   };
 }

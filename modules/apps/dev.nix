@@ -9,12 +9,17 @@
         claude-code
         home-manager
 
-        # Java
+        # Java (25: matches what javaCAD and IntelliJ expect)
         jetbrains.idea
-        jdk
+        jdk25
         maven
         gradle
       ];
+
+      # nixpkgs' maven/gradle bake in their own JDK dependency internally and
+      # ignore PATH, so without this they'd silently use a different JDK than
+      # the one above regardless of what's first on PATH.
+      environment.variables.JAVA_HOME = "${pkgs.jdk25}";
     };
   };
 }
