@@ -26,5 +26,12 @@
         transform = "270";
       };
     };
+
+    # noctalia-greeter matches by connector, not make/model/serial, so this
+    # needs re-syncing (via `niri msg outputs`) if ports get swapped again.
+    noctaliaGreeter = {
+      outputLayout = "DP-1:0,0; DP-3:2560,0; HDMI-A-1:5120,0";
+      outputTransforms = "HDMI-A-1:270";
+    };
   };
 }

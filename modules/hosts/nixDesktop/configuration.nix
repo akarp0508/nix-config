@@ -10,7 +10,7 @@
         self.nixosModules.desktopMonitors
         self.nixosModules.niri
         self.nixosModules.nvidia
-        self.nixosModules.gnomeDesktop
+        self.nixosModules.noctaliaGreeter
         self.nixosModules.kitty
         self.nixosModules.appsCore
         self.nixosModules.appsDev
