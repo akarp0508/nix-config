@@ -4,6 +4,7 @@
 
     config = lib.mkIf config.apps.gaming.enable {
       programs.steam.enable = true;
+      programs.gamemode.enable = true;
       environment.systemPackages = [ pkgs.heroic ];
     };
   };
