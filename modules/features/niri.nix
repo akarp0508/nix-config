@@ -97,38 +97,48 @@
         input.keyboard.xkb.layout = "pl";
 
         layout.gaps = 5;
+        layout.preset-column-widths = _: {
+          content = [
+            { proportion = 0.5; }
+            { proportion = 1.0; }
+          ];
+        };
 
         # The generated config replaces niri's default one, so every bind has to be listed here.
         binds = {
           "Mod+Shift+Slash".show-hotkey-overlay = _: { };
 
           "Mod+Return".spawn = lib.getExe pkgs.kitty;
-          "Mod+S".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
-          "Mod+D".close-window = _: { };
-          "Mod+O".toggle-overview = _: { };
+          "Mod+Space".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
+          "Mod+A".close-window = _: { };
+          "Mod+8".toggle-overview = _: { };
 
           "Mod+Left".focus-column-left = _: { };
           "Mod+Right".focus-column-right = _: { };
           "Mod+Up".focus-window-up = _: { };
           "Mod+Down".focus-window-down = _: { };
-          "Mod+H".focus-column-left = _: { };
+          "Mod+J".focus-column-left = _: { };
           "Mod+L".focus-column-right = _: { };
-          "Mod+K".focus-window-up = _: { };
-          "Mod+J".focus-window-down = _: { };
+          "Mod+I".focus-window-up = _: { };
+          "Mod+K".focus-window-down = _: { };
 
           "Mod+Shift+Left".move-column-left = _: { };
           "Mod+Shift+Right".move-column-right = _: { };
           "Mod+Shift+Up".move-window-up = _: { };
           "Mod+Shift+Down".move-window-down = _: { };
-          "Mod+Shift+H".move-column-left = _: { };
+          "Mod+Shift+J".move-column-left = _: { };
           "Mod+Shift+L".move-column-right = _: { };
-          "Mod+Shift+K".move-window-up = _: { };
-          "Mod+Shift+J".move-window-down = _: { };
+          "Mod+Shift+I".move-window-up = _: { };
+          "Mod+Shift+K".move-window-down = _: { };
 
           "Mod+Ctrl+Left".focus-monitor-left = _: { };
           "Mod+Ctrl+Right".focus-monitor-right = _: { };
+          "Mod+U".focus-monitor-left = _: { };
+          "Mod+O".focus-monitor-right = _: { };
           "Mod+Shift+Ctrl+Left".move-column-to-monitor-left = _: { };
           "Mod+Shift+Ctrl+Right".move-column-to-monitor-right = _: { };
+          "Mod+Shift+U".move-column-to-monitor-left = _: { };
+          "Mod+Shift+O".move-column-to-monitor-right = _: { };
 
           "Mod+Page_Down".focus-workspace-down = _: { };
           "Mod+Page_Up".focus-workspace-up = _: { };
@@ -138,15 +148,15 @@
           "Mod+BracketLeft".consume-or-expel-window-left = _: { };
           "Mod+BracketRight".consume-or-expel-window-right = _: { };
 
-          "Mod+N".switch-preset-column-width = _: { };
-          "Mod+M".maximize-column = _: { };
-          "Mod+Shift+A".fullscreen-window = _: { };
-          "Mod+I".center-column = _: { };
-          "Mod+U".toggle-window-floating = _: { };
+          "Mod+S".switch-preset-column-width = _: { };
+          "Mod+Shift+S".fullscreen-window = _: { };
+          "Mod+D".center-column = _: { };
+          "Mod+Shift+D".toggle-window-floating = _: { };
           "Mod+Minus".set-column-width = "-10%";
           "Mod+Equal".set-column-width = "+10%";
 
           "Print".screenshot = _: { };
+          "Mod+4".screenshot = _: { };
           "Ctrl+Print".screenshot-screen = _: { };
           "Alt+Print".screenshot-window = _: { };
 
@@ -154,7 +164,7 @@
           "XF86AudioLowerVolume".spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-";
           "XF86AudioMute".spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 
-          "Mod+Shift+Y".quit = _: { };
+          "Mod+Shift+A".quit = _: { };
           "Mod+Shift+P".power-off-monitors = _: { };
         }
         // lib.listToAttrs (lib.concatMap (n: [
