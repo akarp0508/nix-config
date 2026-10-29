@@ -118,11 +118,14 @@
         # Ask clients to skip drawing their own titlebar. clip-to-geometry +
         # draw-border-with-background keep windows that still draw their own
         # shadow/corners (despite agreeing to drop CSD) from looking broken.
+        # geometry-corner-radius rounds every window; clip-to-geometry forces
+        # the window content itself to round to match (not just the ring).
         prefer-no-csd = _: { };
         window-rules = [
           {
             clip-to-geometry = true;
             draw-border-with-background = false;
+            geometry-corner-radius = 10;
           }
         ];
 
@@ -136,6 +139,8 @@
           ];
         };
         layout.default-column-width.proportion = 1.0;
+        layout.focus-ring.active-color = "#39FF14";
+        layout.focus-ring.width = 1;
 
         # The generated config replaces niri's default one, so every bind has to be listed here.
         binds = {
