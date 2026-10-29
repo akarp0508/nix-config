@@ -11,6 +11,7 @@
         self.nixosModules.niri
         self.nixosModules.nvidia
         self.nixosModules.gnomeDesktop
+        self.nixosModules.kitty
         self.nixosModules.appsCore
         self.nixosModules.appsDev
         self.nixosModules.appsBrowsers
