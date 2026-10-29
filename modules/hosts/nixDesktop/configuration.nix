@@ -18,6 +18,8 @@
         self.nixosModules.appsGaming
         self.nixosModules.appsSocial
         self.nixosModules.appsDesktop
+        self.nixosModules.appsCad
+        self.nixosModules.syncthing
       ];
 
     networking.hostName = "nixDesktop"; # Matches nixosConfigurations.nixDesktop.
@@ -35,6 +37,7 @@
     apps.gaming.enable = true;
     apps.social.enable = true;
     apps.desktop.enable = true;
+    apps.cad.enable = true;
 
     # Open ports in the firewall.
     # networking.firewall.allowedTCPPorts = [ ... ];
