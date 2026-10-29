@@ -8,6 +8,7 @@
         height = 1440;
         refresh = 143.998;
         x = 0;
+        workspaces = [ "L1" "L2" "L3" ];
       };
       "GIGA-BYTE TECHNOLOGY CO., LTD. G27QC 0x00000443" = {
         width = 2560;
@@ -16,6 +17,7 @@
         x = 2560;
         vrr = "on-demand";
         primary = true;
+        workspaces = [ "M1" "M2" "M3" "M4" "M5" "M6" ];
       };
       # Physically rotated 90° counter-clockwise, so 1080 wide in the layout.
       "Iiyama North America PL2488H 0x01010101" = {
@@ -24,6 +26,7 @@
         refresh = 74.973;
         x = 5120;
         transform = "270";
+        workspaces = [ "R1" "R2" "R3" ];
       };
     };
 

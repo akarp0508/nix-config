@@ -45,6 +45,17 @@
             default = false;
             description = "Focus this monitor at startup.";
           };
+          workspaces = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            description = ''
+              Named workspaces pinned to this output, in order. Pinned
+              workspaces always exist (even empty), giving a fixed per-monitor
+              workspace count instead of niri's default dynamic ones. Names
+              must be unique across all monitors. Empty list keeps the
+              default dynamic behaviour for this output.
+            '';
+          };
         };
       });
     };

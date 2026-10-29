@@ -18,6 +18,22 @@
       }
       // lib.optionalAttrs m.primary { focus-at-startup = _: { }; };
 
+    # Raw KDL text, not the `workspaces` settings option: Nix attrsets always
+    # enumerate sorted by key, so building this via an attrset would silently
+    # re-sort the workspaces alphabetically instead of respecting the order
+    # each monitor lists them in.
+    workspacesKdl = lib.concatStrings (
+      lib.concatLists (
+        lib.mapAttrsToList
+          (outputName: m: map (name: ''
+            workspace "${name}" {
+                open-on-output "${outputName}"
+            }
+          '') m.workspaces)
+          config.monitors
+      )
+    );
+
     noctalia = lib.getExe packages.myNoctalia;
   in
   {
@@ -38,6 +54,23 @@
       package = packages.myNiri.wrap {
         settings = {
           outputs = lib.mapAttrs (_: toOutput) config.monitors;
+
+          extraConfig = workspacesKdl;
+
+          # Direct jump to a named workspace regardless of which monitor is
+          # currently focused: qwe -> L1-3, rtfgvb -> M1-6, zxc -> R1-3.
+          binds = lib.foldl' (acc: b: acc // b) { } (
+            lib.mapAttrsToList
+              (key: ws: {
+                "Mod+${key}".focus-workspace = ws;
+                "Mod+Shift+${key}".move-column-to-workspace = ws;
+              })
+              {
+                Q = "L1"; W = "L2"; E = "L3";
+                R = "M1"; T = "M2"; F = "M3"; G = "M4"; V = "M5"; B = "M6";
+                Z = "R1"; X = "R2"; C = "R3";
+              }
+          );
 
           # noctalia keeps the wallpaper as runtime state, so set it over IPC once it's up.
           spawn-sh-at-startup = lib.optional (config.wallpaper != null) ''
@@ -71,7 +104,7 @@
 
           "Mod+Return".spawn = lib.getExe pkgs.kitty;
           "Mod+S".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
-          "Mod+Q".close-window = _: { };
+          "Mod+D".close-window = _: { };
           "Mod+O".toggle-overview = _: { };
 
           "Mod+Left".focus-column-left = _: { };
@@ -105,11 +138,11 @@
           "Mod+BracketLeft".consume-or-expel-window-left = _: { };
           "Mod+BracketRight".consume-or-expel-window-right = _: { };
 
-          "Mod+R".switch-preset-column-width = _: { };
-          "Mod+F".maximize-column = _: { };
-          "Mod+Shift+F".fullscreen-window = _: { };
-          "Mod+C".center-column = _: { };
-          "Mod+V".toggle-window-floating = _: { };
+          "Mod+N".switch-preset-column-width = _: { };
+          "Mod+M".maximize-column = _: { };
+          "Mod+Shift+A".fullscreen-window = _: { };
+          "Mod+I".center-column = _: { };
+          "Mod+U".toggle-window-floating = _: { };
           "Mod+Minus".set-column-width = "-10%";
           "Mod+Equal".set-column-width = "+10%";
 
@@ -121,7 +154,7 @@
           "XF86AudioLowerVolume".spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-";
           "XF86AudioMute".spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 
-          "Mod+Shift+E".quit = _: { };
+          "Mod+Shift+Y".quit = _: { };
           "Mod+Shift+P".power-off-monitors = _: { };
         }
         // lib.listToAttrs (lib.concatMap (n: [
