@@ -5,22 +5,16 @@
   {
     imports =
       [
+        self.nixosModules.base
         self.nixosModules.desktopHardware
         self.nixosModules.desktopMonitors
         self.nixosModules.niri
-        self.nixosModules.zsh
         self.nixosModules.nvidia
         self.nixosModules.gnomeDesktop
-        self.nixosModules.audio
-        self.nixosModules.printing
-        self.nixosModules.nixSettings
-        self.nixosModules.locale
         self.nixosModules.appsCore
         self.nixosModules.appsDev
         self.nixosModules.appsBrowsers
         self.nixosModules.appsGaming
-        self.nixosModules.bootloader
-        self.nixosModules.networkmanager
       ];
 
     networking.hostName = "nixDesktop"; # Matches nixosConfigurations.nixDesktop.
