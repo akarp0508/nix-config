@@ -204,11 +204,7 @@
 
           "Mod+Shift+A".quit = _: { };
           "Mod+Shift+P".power-off-monitors = _: { };
-        }
-        // lib.listToAttrs (lib.concatMap (n: [
-          (lib.nameValuePair "Mod+${toString n}" { focus-workspace = n; })
-          (lib.nameValuePair "Mod+Shift+${toString n}" { move-column-to-workspace = n; })
-        ]) (lib.range 1 9));
+        };
       };
     };
   };
