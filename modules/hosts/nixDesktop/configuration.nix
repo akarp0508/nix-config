@@ -19,16 +19,11 @@
         self.nixosModules.appsDev
         self.nixosModules.appsBrowsers
         self.nixosModules.appsGaming
+        self.nixosModules.bootloader
+        self.nixosModules.networkmanager
       ];
 
-    # Bootloader.
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-
     networking.hostName = "nixDesktop"; # Matches nixosConfigurations.nixDesktop.
-
-    # Enable networking
-    networking.networkmanager.enable = true;
 
     users.users."akarp0508" = {
       isNormalUser = true;
