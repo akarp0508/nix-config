@@ -1,6 +1,6 @@
 { self, inputs, ... }: {
 
-  flake.nixosModules.desktopConfiguration = { config, pkgs, inputs, ... }:
+  flake.nixosModules.desktopConfiguration = { config, pkgs, ... }:
 
   {
     imports =
@@ -13,56 +13,45 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    # Use latest kernel.
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    # NVIDIA (RTX 3080, Ampere)
+    hardware.graphics.enable = true;
 
-    # NVIDIA
-    hardware.graphics = {
-        enable = true;
-      };
+    # Load nvidia driver for Xorg and Wayland
+    services.xserver.videoDrivers = [ "nvidia" ];
 
-      # Load nvidia driver for Xorg and Wayland
-      services.xserver.videoDrivers = ["nvidia"];
+    hardware.nvidia = {
+      # Modesetting is required.
+      modesetting.enable = true;
 
-      hardware.nvidia = {
+      # Saves the entire VRAM on suspend. Enable if you get graphical corruption
+      # or application crashes after waking up from sleep.
+      powerManagement.enable = false;
 
-        # Modesetting is required.
-        modesetting.enable = true;
+      # Fine-grained power management. Turns off GPU when not in use (laptops).
+      powerManagement.finegrained = false;
 
-        # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-        # Enable this if you have graphical corruption issues or application crashes after waking
-        # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-        # of just the bare essentials.
-        powerManagement.enable = false;
+      # Use the NVIDIA open kernel module (recommended for Turing and newer).
+      open = true;
 
-        # Fine-grained power management. Turns off GPU when not in use.
-        # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-        powerManagement.finegrained = false;
-
-        # Use the NVidia open source kernel module (not to be confused with the
-        # independent third-party "nouveau" open source driver).
-        # Support is limited to the Turing and later architectures. Full list of
-        # supported GPUs is at:
-        # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
-        # Only available from driver 515.43.04+
-        open = false;
-
-        # Enable the Nvidia settings menu,
-	      # accessible via `nvidia-settings`.
-        nvidiaSettings = true;
+      # Enable the Nvidia settings menu, accessible via `nvidia-settings`.
+      nvidiaSettings = true;
     };
 
-    networking.hostName = "nixos"; # Define your hostname.
-    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    networking.hostName = "nixDesktop"; # Matches nixosConfigurations.nixDesktop.
 
     # Enable networking
     networking.networkmanager.enable = true;
 
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+    };
+
+    nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
 
     # Set your time zone.
     time.timeZone = "Europe/Warsaw";
@@ -85,14 +74,12 @@
     # Enable zsh
     programs.zsh.enable = true;
 
-    # Enable the X11 windowing systemgi.
+    # Enable the X11 windowing system.
     services.xserver.enable = true;
 
     # Enable the GNOME Desktop Environment.
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
-
-    programs.niri.enable = true;
 
     # Configure keymap in X11
     services.xserver.xkb = {
@@ -116,23 +103,18 @@
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this
       #jack.enable = true;
-
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
     };
 
     users.users."akarp0508" = {
       isNormalUser = true;
       description = "akarp0508";
       extraGroups = [ "networkmanager" "wheel" ];
+      shell = pkgs.zsh;
     };
 
     programs.firefox.enable = true;
 
-    programs.steam = {
-      enable = true;
-    };
+    programs.steam.enable = true;
 
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
@@ -151,24 +133,9 @@
       heroic
     ];
 
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    # programs.mtr.enable = true;
-    # programs.gnupg.agent = {
-    #   enable = true;
-    #   enableSSHSupport = true;
-    # };
-
-    # List services that you want to enable:
-
-    # Enable the OpenSSH daemon.
-    # services.openssh.enable = true;
-
     # Open ports in the firewall.
     # networking.firewall.allowedTCPPorts = [ ... ];
     # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
