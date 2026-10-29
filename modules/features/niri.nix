@@ -79,6 +79,27 @@
               sleep 1
             done
           '';
+
+          spawn-at-startup = [
+            (lib.getExe pkgs.discord)
+            (lib.getExe pkgs.spotify)
+          ];
+
+          # open-focused false keeps startup focus on M1 (the primary
+          # output's focus-at-startup output, above) instead of jumping to
+          # whichever of these opens last.
+          window-rules = [
+            {
+              matches = [ { app-id = "^discord$"; } ];
+              open-on-workspace = "L1";
+              open-focused = false;
+            }
+            {
+              matches = [ { app-id = "^Spotify$"; } ];
+              open-on-workspace = "R1";
+              open-focused = false;
+            }
+          ];
         };
       };
     };
