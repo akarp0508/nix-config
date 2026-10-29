@@ -101,7 +101,14 @@
     };
 
     # Enable zsh
-    programs.zsh.enable = true;
+    programs.zsh = {
+      enable = true;
+      ohMyZsh = {
+        enable = true;
+        plugins = [ ];
+        theme = "agnoster";
+      };
+    };
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;
@@ -160,6 +167,7 @@
       home-manager
       zed-editor
       heroic
+      claude-code
     ];
 
     # Open ports in the firewall.
