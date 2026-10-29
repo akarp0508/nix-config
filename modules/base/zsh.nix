@@ -4,7 +4,7 @@
       enable = true;
       ohMyZsh = {
         enable = true;
-        plugins = [ ];
+        plugins = [ "git" ];
         theme = "agnoster";
       };
 
