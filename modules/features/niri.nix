@@ -23,10 +23,17 @@
   {
     imports = [
       self.nixosModules.monitors
-      self.nixosModules.wallpaper
     ];
 
-    programs.niri = {
+    # Wallpaper image for the desktop. Applied by niri at session startup.
+    # Shared default so every niri host gets the same look unless a host overrides it.
+    options.wallpaper = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = ./wallpaper.png;
+      description = "Wallpaper image, set on all monitors at login.";
+    };
+
+    config.programs.niri = {
       enable = true;
       package = packages.myNiri.wrap {
         settings = {
