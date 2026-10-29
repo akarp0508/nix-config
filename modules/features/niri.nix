@@ -1,8 +1,46 @@
 { self, inputs, ... }: {
-  flake.nixosModules.niri = { pkgs, lib, ... }: {
+  flake.nixosModules.niri = { config, pkgs, lib, ... }:
+  let
+    packages = self.packages.${pkgs.stdenv.hostPlatform.system};
+
+    toOutput = m:
+      if !m.enable then { off = _: { }; }
+      else {
+        mode = "${toString m.width}x${toString m.height}"
+          + lib.optionalString (m.refresh != null) "@${toString m.refresh}";
+        scale = m.scale;
+        transform = m.transform;
+        position = _: { props = { inherit (m) x y; }; };
+      }
+      // lib.optionalAttrs (m.vrr == "on") { variable-refresh-rate = _: { }; }
+      // lib.optionalAttrs (m.vrr == "on-demand") {
+        variable-refresh-rate = _: { props.on-demand = true; };
+      }
+      // lib.optionalAttrs m.primary { focus-at-startup = _: { }; };
+
+    noctalia = lib.getExe packages.myNoctalia;
+  in
+  {
+    imports = [
+      self.nixosModules.monitors
+      self.nixosModules.wallpaper
+    ];
+
     programs.niri = {
       enable = true;
-      package = self.packages.${pkgs.stdenv.hostPlatform.system}.myNiri;
+      package = packages.myNiri.wrap {
+        settings = {
+          outputs = lib.mapAttrs (_: toOutput) config.monitors;
+
+          # noctalia keeps the wallpaper as runtime state, so set it over IPC once it's up.
+          spawn-sh-at-startup = lib.optional (config.wallpaper != null) ''
+            for i in $(seq 30); do
+              ${noctalia} ipc call wallpaper set ${config.wallpaper} all && break
+              sleep 1
+            done
+          '';
+        };
+      };
     };
   };
 
