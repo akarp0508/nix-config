@@ -103,6 +103,7 @@
             { proportion = 1.0; }
           ];
         };
+        layout.default-column-width.proportion = 1.0;
 
         # The generated config replaces niri's default one, so every bind has to be listed here.
         binds = {
