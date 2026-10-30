@@ -2,24 +2,22 @@
   flake.nixosModules.nvidia = { ... }: {
     hardware.graphics.enable = true;
 
-    # Load nvidia driver for Xorg and Wayland
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
-      # Modesetting is required.
+      # Required for Wayland.
       modesetting.enable = true;
 
-      # Saves the entire VRAM on suspend. Enable if you get graphical corruption
-      # or application crashes after waking up from sleep.
+      # Preserves VRAM across suspend; without it, resuming from a long
+      # suspend can corrupt GPU state (NVRM Xid 13) and hang the system.
       powerManagement.enable = true;
 
-      # Fine-grained power management. Turns off GPU when not in use (laptops).
+      # Turns off the GPU when not in use. Set to true on laptops.
       powerManagement.finegrained = false;
 
-      # Use the NVIDIA open kernel module (recommended for Turing and newer).
+      # Recommended for Turing and newer.
       open = true;
 
-      # Enable the Nvidia settings menu, accessible via `nvidia-settings`.
       nvidiaSettings = true;
     };
   };

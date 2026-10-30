@@ -107,7 +107,7 @@
 
   perSystem = { pkgs, lib, self', ... }: {
     packages.myNiri = inputs.wrapper-modules.wrappers.niri.wrap {
-      inherit pkgs; # THIS PART IS VERY IMPORTANT, I FORGOT IT IN THE VIDEO!!!
+      inherit pkgs; # required, or the wrapper resolves packages against its own pkgs instead of this flake's
       settings = {
         spawn-at-startup = [
           (lib.getExe self'.packages.myNoctalia)

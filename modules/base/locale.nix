@@ -1,9 +1,7 @@
 { ... }: {
   flake.nixosModules.locale = { ... }: {
-    # Set your time zone.
     time.timeZone = "Europe/Warsaw";
 
-    # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
     i18n.extraLocaleSettings = {
@@ -18,13 +16,11 @@
       LC_TIME = "pl_PL.UTF-8";
     };
 
-    # Configure keymap in X11
     services.xserver.xkb = {
       layout = "pl";
       variant = "";
     };
 
-    # Configure console keymap
     console.keyMap = "pl2";
   };
 }
