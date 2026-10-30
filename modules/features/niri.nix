@@ -49,6 +49,8 @@
       description = "Wallpaper image, set on all monitors at login.";
     };
 
+    config.environment.systemPackages = [ pkgs.bibata-cursors ];
+
     config.programs.niri = {
       enable = true;
       package = packages.myNiri.wrap {
@@ -114,6 +116,11 @@
         ];
 
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
+
+        cursor = {
+          xcursor-theme = "Bibata-Modern-Classic";
+          xcursor-size = 22;
+        };
 
         # Ask clients to skip drawing their own titlebar. clip-to-geometry +
         # draw-border-with-background keep windows that still draw their own
