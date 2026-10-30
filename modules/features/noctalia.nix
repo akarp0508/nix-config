@@ -3,6 +3,10 @@
     packages.myNoctalia = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
       inherit pkgs;
 
+      # nixpkgs removed noctalia-shell (2026-10-22) in favor of noctalia v5;
+      # the wrapper itself still defaults to the now-gone package name.
+      package = pkgs.noctalia;
+
       # Black + bright green color scheme. outOfStoreConfig keeps
       # ~/.config/noctalia live-editable via noctalia's own settings UI
       # (autoCopyConfig only seeds files that don't already exist there),
