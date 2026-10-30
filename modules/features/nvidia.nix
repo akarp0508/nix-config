@@ -11,7 +11,7 @@
 
       # Saves the entire VRAM on suspend. Enable if you get graphical corruption
       # or application crashes after waking up from sleep.
-      powerManagement.enable = false;
+      powerManagement.enable = true;
 
       # Fine-grained power management. Turns off GPU when not in use (laptops).
       powerManagement.finegrained = false;
