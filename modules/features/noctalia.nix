@@ -69,6 +69,15 @@
         start = [ "launcher" "clock" "active_window" "media" ];
         center = [ "workspace_apps" ];
         end = [ "tray" "notifications" "cpu" "temp" "ram" "battery" "volume" "control-center" ];
+
+        # Slimmer bars on the side monitors. Matched by model (a substring of
+        # the output description) so it survives port swaps.
+        monitor = lib.genAttrs [ "C27JG5x" "PL2488H" ] (model: {
+          match = model;
+          start = [ "launcher" "clock" ];
+          center = [ "workspace_apps" ];
+          end = [ "tray" "notifications" "volume" "control-center" ];
+        });
       };
 
       widget = {
