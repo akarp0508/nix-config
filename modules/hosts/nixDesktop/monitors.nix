@@ -20,7 +20,7 @@
         workspaces = [ "M1" "M2" "M3" "M4" "M5" "M6" ];
       };
       # Physically rotated 90° counter-clockwise, so 1080 wide in the layout.
-      "Iiyama North America PL2488H 0x01010101" = {
+      "iiyama Corporation PL2488H 0x01010101" = {
         width = 1920;
         height = 1080;
         refresh = 74.973;

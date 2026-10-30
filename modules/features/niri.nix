@@ -77,7 +77,7 @@
           # noctalia keeps the wallpaper as runtime state, so set it over IPC once it's up.
           spawn-sh-at-startup = lib.optional (config.wallpaper != null) ''
             for i in $(seq 30); do
-              ${noctalia} ipc call wallpaper set ${config.wallpaper} all && break
+              ${noctalia} msg wallpaper-set ${config.wallpaper} && break
               sleep 1
             done
           '';
@@ -154,7 +154,7 @@
           "Mod+Shift+Slash".show-hotkey-overlay = _: { };
 
           "Mod+Return".spawn = lib.getExe pkgs.kitty;
-          "Mod+Space".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
+          "Mod+Space".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg panel-toggle launcher";
           "Mod+A".close-window = _: { };
           "Mod+8".toggle-overview = _: { };
 
