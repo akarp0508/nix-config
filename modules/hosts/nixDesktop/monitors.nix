@@ -25,6 +25,8 @@
         height = 1080;
         refresh = 74.973;
         x = 5120;
+        # Vertically centred on the Gigabyte: (1440 - 1920) / 2.
+        y = -240;
         transform = "270";
         workspaces = [ "R1" "R2" "R3" ];
       };
@@ -33,7 +35,7 @@
     # noctalia-greeter matches by connector, not make/model/serial, so this
     # needs re-syncing (via `niri msg outputs`) if ports get swapped again.
     noctaliaGreeter = {
-      outputLayout = "DP-1:0,0; DP-3:2560,0; HDMI-A-1:5120,0";
+      outputLayout = "DP-1:0,0; DP-3:2560,0; HDMI-A-1:5120,-240";
       outputTransforms = "HDMI-A-1:270";
     };
   };
