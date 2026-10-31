@@ -1,30 +1,37 @@
-{ ... }: {
-  perSystem = { pkgs, lib, ... }:
+{ lib, ... }:
+let
+  # Black + bright green color scheme, shared with noctalia-greeter.
+  colors = {
+    primary = "#39FF14";
+    onPrimary = "#000000";
+    secondary = "#22C55E";
+    onSecondary = "#000000";
+    tertiary = "#86EFAC";
+    onTertiary = "#000000";
+    error = "#FF4444";
+    onError = "#000000";
+    surface = "#000000";
+    onSurface = "#E8FFE8";
+    surfaceVariant = "#101810";
+    onSurfaceVariant = "#7FBF8F";
+    outline = "#1F4D2E";
+    shadow = "#000000";
+    hover = "#4AFF2E";
+    onHover = "#000000";
+  };
+in
+{
+  flake.lib.colors = colors;
+
+  perSystem = { pkgs, ... }:
   let
     paletteName = "NeonGreen";
 
-    # Black + bright green color scheme. noctalia 5.4.0 only parses the
-    # m-prefixed palette format (the docs' `version = 2` snake_case format is
-    # newer and silently renders text transparent here), and it rejects a
-    # palette without a `terminal` block.
+    # noctalia 5.4.0 only parses the m-prefixed palette format (the docs'
+    # `version = 2` snake_case format is newer and silently renders text
+    # transparent here), and it rejects a palette without a `terminal` block.
     palette = {
-      dark = {
-        mPrimary = "#39FF14";
-        mOnPrimary = "#000000";
-        mSecondary = "#22C55E";
-        mOnSecondary = "#000000";
-        mTertiary = "#86EFAC";
-        mOnTertiary = "#000000";
-        mError = "#FF4444";
-        mOnError = "#000000";
-        mSurface = "#000000";
-        mOnSurface = "#E8FFE8";
-        mSurfaceVariant = "#101810";
-        mOnSurfaceVariant = "#7FBF8F";
-        mOutline = "#1F4D2E";
-        mShadow = "#000000";
-        mHover = "#4AFF2E";
-        mOnHover = "#000000";
+      dark = lib.mapAttrs' (name: lib.nameValuePair "m${lib.toUpper (lib.substring 0 1 name)}${lib.substring 1 (-1) name}") colors // {
         terminal = {
           background = "#000000";
           foreground = "#E8FFE8";
