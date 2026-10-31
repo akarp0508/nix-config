@@ -34,8 +34,11 @@
 
     # noctalia-greeter matches by connector, not make/model/serial, so this
     # needs re-syncing (via `niri msg outputs`) if ports get swapped again.
+    # The greeter starts the cursor (and so focus) on the first output
+    # listed, so the Gigabyte goes first; positions are explicit, so the
+    # order doesn't affect the layout itself.
     noctaliaGreeter = {
-      outputLayout = "DP-1:0,0; DP-3:2560,0; HDMI-A-1:5120,-240";
+      outputLayout = "DP-3:2560,0; DP-1:0,0; HDMI-A-1:5120,-240";
       outputTransforms = "HDMI-A-1:270";
     };
   };
