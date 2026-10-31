@@ -12,6 +12,12 @@
         obsidian
         mission-center
       ];
+
+      # Nautilus needs gvfs to list drives and udisks2 to mount them without
+      # sudo. Mounting internal drives asks for the admin password via the
+      # polkit agent (noctalia's).
+      services.gvfs.enable = true;
+      services.udisks2.enable = true;
     };
   };
 }
