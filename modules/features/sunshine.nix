@@ -3,15 +3,21 @@
     services.sunshine = {
       enable = true;
       autoStart = true;
-      # KMS capture needs CAP_SYS_ADMIN; it's the only capture method that
-      # works reliably on niri with the NVIDIA driver.
-      capSysAdmin = true;
       openFirewall = true;
-      # CUDA lets KMS-captured frames go straight to NVENC on the GPU instead
-      # of falling back to a slow CPU copy / software encode.
+      # CUDA lets captured frames go straight to NVENC on the GPU instead of
+      # falling back to a slow CPU copy / software encode.
       package = pkgs.sunshine.override { cudaSupport = true; };
-      # Settings and apps are left to the web UI (https://localhost:47990);
-      # setting either here would make the UI read-only.
+      # Setting anything here makes the web UI's config page read-only;
+      # pairing still happens in the UI (https://localhost:47990).
+      settings = {
+        # Without a fixed method Sunshine probes the screencast portal first,
+        # which pops up niri's "pick a screen" dialog at every login. niri
+        # supports wlr-screencopy, so use that directly.
+        capture = "wlr";
+        # Index in Sunshine's Wayland monitor list (see its log at startup);
+        # 0 is the Gigabyte (DP-3), the main monitor.
+        output_name = 0;
+      };
     };
   };
 }
