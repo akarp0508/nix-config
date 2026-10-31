@@ -136,6 +136,9 @@
           }
         ];
 
+        # No "Important Hotkeys" popup at login; Mod+Shift+/ still shows it.
+        hotkey-overlay.skip-at-startup = _: { };
+
         input.keyboard.xkb.layout = "pl";
 
         layout.gaps = 5;
