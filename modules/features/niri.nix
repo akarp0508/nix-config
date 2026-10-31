@@ -209,6 +209,13 @@
           "XF86AudioLowerVolume".spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-";
           "XF86AudioMute".spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 
+          # Media keys act on the active MPRIS player via noctalia.
+          "XF86AudioPlay".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg media toggle";
+          "XF86AudioPause".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg media toggle";
+          "XF86AudioStop".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg media stop";
+          "XF86AudioNext".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg media next";
+          "XF86AudioPrev".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg media previous";
+
           "Mod+Shift+A".quit = _: { };
           "Mod+Shift+P".power-off-monitors = _: { };
         };
