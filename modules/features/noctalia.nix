@@ -112,6 +112,10 @@
       location.address = "Warsaw";
       weather.unit = "metric";
 
+      # noctalia's built-in polkit authentication agent (password prompts for
+      # privileged actions); there's no other agent running in the session.
+      shell.polkit_agent = true;
+
       idle = {
         pre_action_fade_seconds = 5.0;
         behavior = {
