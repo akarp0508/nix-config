@@ -1,30 +1,10 @@
-{ lib, ... }:
-let
-  # Black + bright green color scheme, shared with noctalia-greeter.
-  colors = {
-    primary = "#39FF14";
-    onPrimary = "#000000";
-    secondary = "#22C55E";
-    onSecondary = "#000000";
-    tertiary = "#86EFAC";
-    onTertiary = "#000000";
-    error = "#FF4444";
-    onError = "#000000";
-    surface = "#000000";
-    onSurface = "#E8FFE8";
-    surfaceVariant = "#101810";
-    onSurfaceVariant = "#7FBF8F";
-    outline = "#1F4D2E";
-    shadow = "#000000";
-    hover = "#4AFF2E";
-    onHover = "#000000";
-  };
-in
+{ self, lib, ... }:
 {
-  flake.lib.colors = colors;
-
   perSystem = { pkgs, ... }:
   let
+    inherit (self.lib) colors;
+    terminal = self.lib.terminalColors;
+
     paletteName = "NeonGreen";
 
     # noctalia 5.4.0 only parses the m-prefixed palette format (the docs'
@@ -32,22 +12,7 @@ in
     # transparent here), and it rejects a palette without a `terminal` block.
     palette = {
       dark = lib.mapAttrs' (name: lib.nameValuePair "m${lib.toUpper (lib.substring 0 1 name)}${lib.substring 1 (-1) name}") colors // {
-        terminal = {
-          background = "#000000";
-          foreground = "#E8FFE8";
-          cursor = "#39FF14";
-          cursorText = "#000000";
-          selectionBg = "#1F4D2E";
-          selectionFg = "#E8FFE8";
-          normal = {
-            black = "#101810"; red = "#FF4444"; green = "#22C55E"; yellow = "#D4E157";
-            blue = "#26A69A"; magenta = "#9CCC65"; cyan = "#4DD0B1"; white = "#7FBF8F";
-          };
-          bright = {
-            black = "#1F4D2E"; red = "#FF6B6B"; green = "#39FF14"; yellow = "#EEFF41";
-            blue = "#64FFDA"; magenta = "#B2FF59"; cyan = "#86EFAC"; white = "#E8FFE8";
-          };
-        };
+        inherit terminal;
       };
     };
 

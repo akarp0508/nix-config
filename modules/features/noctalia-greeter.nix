@@ -41,7 +41,7 @@
         theme_mode = "dark";
         # Its spot at the bottom centre is taken by the lowered login panel.
         hide_logo = true;
-        # Same colors as the noctalia shell (modules/features/noctalia.nix).
+        # Shared palette (modules/features/theming.nix).
         palette = lib.mapAttrs' (name: lib.nameValuePair (toSnakeCase name)) self.lib.colors;
       } // lib.optionalAttrs (config ? wallpaper && config.wallpaper != null) {
         wallpaper = {
