@@ -138,6 +138,8 @@ in
       };
 
       osd.position = "top_right";
+      # No "now playing" popup on every track change.
+      osd.kinds.media = false;
 
       dock = {
         enabled = true;
