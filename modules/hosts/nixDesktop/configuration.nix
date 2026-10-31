@@ -20,6 +20,7 @@
         self.nixosModules.appsDesktop
         self.nixosModules.appsCad
         self.nixosModules.syncthing
+        self.nixosModules.sunshine
       ];
 
     networking.hostName = "nixDesktop"; # Matches nixosConfigurations.nixDesktop.
