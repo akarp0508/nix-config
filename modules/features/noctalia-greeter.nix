@@ -3,12 +3,26 @@
   let
     cfg = config.noctaliaGreeter;
 
-    # The login panel is hard-centred in 1.7.0 (no config key), covering the
-    # middle of the wallpaper; push it towards the bottom instead.
+    # 1.7.0 has no config keys for these, so patch them in:
+    # - the login panel is hard-centred, covering the middle of the
+    #   wallpaper; push it towards the bottom instead.
+    # - the clock is small and its date is drawn in on_surface_variant,
+    #   unreadable over a light sky; enlarge both and draw the date bold in
+    #   on_surface like the time.
+    # - the login panel is a solid block; make it translucent so the
+    #   wallpaper shows through.
     package = pkgs.noctalia-greeter.overrideAttrs (old: {
       postPatch = (old.postPatch or "") + ''
         substituteInPlace src/greeter/greeter_surface.cpp \
-          --replace-fail "std::round((sh - panelHeight) * 0.5f)" "std::round((sh - panelHeight) * 0.85f)"
+          --replace-fail "std::round((sh - panelHeight) * 0.5f)" "std::round((sh - panelHeight) * 0.85f)" \
+          --replace-fail "Style::scaled(48.0f)" "Style::scaled(96.0f)" \
+          --replace-fail "clockDate->setFontSize(Style::fontSizeBody())" "clockDate->setFontSize(Style::scaled(24.0f))" \
+          --replace-fail "m_clockDateLabel->setFontSize(Style::fontSizeBody())" "m_clockDateLabel->setFontSize(Style::scaled(24.0f))" \
+          --replace-fail "clockDate->setColor(colorForRole(ColorRole::OnSurfaceVariant))" "clockDate->setColor(colorForRole(ColorRole::OnSurface)); clockDate->setBold(true)" \
+          --replace-fail "m_clockDateLabel->setColor(colorForRole(ColorRole::OnSurfaceVariant))" "m_clockDateLabel->setColor(colorForRole(ColorRole::OnSurface))"
+        sed -i '/m_loginPanel->setStyle(/,/\.fill/ s/colorForRole(ColorRole::SurfaceVariant)/colorForRole(ColorRole::SurfaceVariant, 0.2f)/' \
+          src/greeter/greeter_surface.cpp
+        grep -q 'colorForRole(ColorRole::SurfaceVariant, 0.2f)' src/greeter/greeter_surface.cpp
       '';
     });
 
@@ -38,6 +52,7 @@
       };
 
       clock = {
+        position = "top-center";
         time_format = "{:%H:%M}";
         date_format = "{:%a, %b %d}";
       };
