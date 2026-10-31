@@ -20,6 +20,8 @@
       libxxf86vm
       libxtst
       libglvnd
+      libx11
+      expat
     ];
   in
   {
