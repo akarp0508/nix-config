@@ -1,11 +1,12 @@
 { ... }: {
   flake.nixosModules.appsDev = { config, lib, pkgs, ... }: {
-    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Python)";
+    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Python)";
 
     config = lib.mkIf config.apps.dev.enable {
       environment.systemPackages = with pkgs; [
         zed-editor
         claude-code
+        gh
         home-manager
 
         # Java (25: matches what javaCAD and IntelliJ expect)
