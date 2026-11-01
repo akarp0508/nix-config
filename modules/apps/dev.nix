@@ -1,6 +1,6 @@
 { ... }: {
   flake.nixosModules.appsDev = { config, lib, pkgs, ... }: {
-    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Python)";
+    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Wine, Python)";
 
     config = lib.mkIf config.apps.dev.enable {
       environment.systemPackages = with pkgs; [
@@ -17,6 +17,10 @@
 
         # Bundles its own JBR and downloads the Android SDK on first run (to ~/Android/Sdk).
         android-studio
+
+        # Run Windows .exe tools. wow64 (not wineWowPackages) is the variant
+        # prebuilt in cache.nixos.org; the other one compiles Wine from source.
+        wineWow64Packages.stable
 
         # Python. NixOS's python3 is immutable (no system-wide pip install),
         # so uv is the escape hatch for per-project venvs/dependencies.
