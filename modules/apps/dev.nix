@@ -1,6 +1,6 @@
 { ... }: {
   flake.nixosModules.appsDev = { config, lib, pkgs, ... }: {
-    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Wine, Python, language servers)";
+    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Wine, Python, language servers, adb, direnv)";
 
     config = lib.mkIf config.apps.dev.enable {
       environment.systemPackages = with pkgs; [
@@ -17,6 +17,9 @@
 
         # Bundles its own JBR and downloads the Android SDK on first run (to ~/Android/Sdk).
         android-studio
+        # adb/fastboot: install builds on the phone, read logcat. No adb group
+        # needed: systemd's uaccess grants the logged-in user USB access.
+        android-tools
 
         # Run Windows .exe tools. wow64 (not wineWowPackages) is the variant
         # prebuilt in cache.nixos.org; the other one compiles Wine from source.
@@ -32,7 +35,14 @@
         jdt-language-server
         clang-tools
         pyright
+
+        jq
       ];
+
+      # Per-project toolchains: a project's .envrc (`use flake`) loads its
+      # devShell on cd. nix-direnv (on by default) caches it and keeps it
+      # from being garbage-collected. Hooks into zsh automatically.
+      programs.direnv.enable = true;
 
       # nixpkgs' maven/gradle bake in their own JDK dependency internally and
       # ignore PATH, so without this they'd silently use a different JDK than
