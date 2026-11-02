@@ -21,6 +21,7 @@
         self.nixosModules.appsCad
         self.nixosModules.syncthing
         self.nixosModules.sunshine
+        self.nixosModules.audioOutputToggle
         self.nixosModules.theming
       ];
 
@@ -32,6 +33,9 @@
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.zsh;
     };
+
+    # Arctis 9 game output <-> motherboard analog (speakers).
+    audio.outputToggle.sinks = [ "Arctis_9.*stereo-game" "pci-0000_0a_00\\.4.*analog-stereo" ];
 
     apps.core.enable = true;
     apps.dev.enable = true;

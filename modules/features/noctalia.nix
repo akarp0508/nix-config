@@ -53,6 +53,8 @@
       };
 
       widget = {
+        # Right-click cycles the default output (see audio-output-toggle.nix).
+        volume.actions.right = "exec audio-output-toggle";
         clock = {
           format = "{:%H:%M %a, %b %d}";
           vertical_format = "{:%H\n%M}";
