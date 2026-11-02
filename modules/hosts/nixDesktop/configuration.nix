@@ -30,7 +30,7 @@
     users.users."akarp0508" = {
       isNormalUser = true;
       description = "akarp0508";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "dialout" ];
       shell = pkgs.zsh;
     };
 
