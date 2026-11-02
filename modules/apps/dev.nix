@@ -1,6 +1,6 @@
 { ... }: {
   flake.nixosModules.appsDev = { config, lib, pkgs, ... }: {
-    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Wine, Python)";
+    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Wine, Python, language servers)";
 
     config = lib.mkIf config.apps.dev.enable {
       environment.systemPackages = with pkgs; [
@@ -26,6 +26,12 @@
         # so uv is the escape hatch for per-project venvs/dependencies.
         python3
         uv
+
+        # Language servers for Claude Code's LSP plugins (jdtls-lsp, clangd-lsp,
+        # pyright-lsp). The plugins only call these binaries from PATH.
+        jdt-language-server
+        clang-tools
+        pyright
       ];
 
       # nixpkgs' maven/gradle bake in their own JDK dependency internally and
