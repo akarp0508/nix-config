@@ -21,6 +21,7 @@
       libxtst
       libglvnd
       libx11
+      libxcb
       expat
     ];
   in

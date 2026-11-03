@@ -22,6 +22,11 @@
       # Installs DroidCam and loads the v4l2loopback kernel module it needs
       # to expose the phone as a virtual webcam.
       programs.droidcam.enable = true;
+      # exclusive_caps=1 makes Chromium/Electron apps (Discord, browsers) list
+      # the loopback as a camera; the label replaces "Dummy video device".
+      boot.extraModprobeConfig = ''
+        options v4l2loopback exclusive_caps=1 card_label="DroidCam"
+      '';
     };
   };
 }
