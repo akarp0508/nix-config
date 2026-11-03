@@ -23,6 +23,7 @@
         self.nixosModules.sunshine
         self.nixosModules.audioOutputToggle
         self.nixosModules.theming
+        self.nixosModules.openrgb
       ];
 
     networking.hostName = "nixDesktop"; # Matches nixosConfigurations.nixDesktop.
