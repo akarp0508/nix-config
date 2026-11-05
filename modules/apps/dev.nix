@@ -1,6 +1,6 @@
 { ... }: {
   flake.nixosModules.appsDev = { config, lib, pkgs, ... }: {
-    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Wine, Python, language servers, adb, direnv)";
+    options.apps.dev.enable = lib.mkEnableOption "development tools (zed-editor, claude-code, gh, home-manager, IntelliJ IDEA + Java toolchain, Android Studio, Wine, Python, language servers, adb, direnv, Docker)";
 
     config = lib.mkIf config.apps.dev.enable {
       environment.systemPackages = with pkgs; [
@@ -43,6 +43,9 @@
       # devShell on cd. nix-direnv (on by default) caches it and keeps it
       # from being garbage-collected. Hooks into zsh automatically.
       programs.direnv.enable = true;
+
+      # Docker daemon; the user is in the docker group (see host configuration.nix).
+      virtualisation.docker.enable = true;
 
       # nixpkgs' maven/gradle bake in their own JDK dependency internally and
       # ignore PATH, so without this they'd silently use a different JDK than
