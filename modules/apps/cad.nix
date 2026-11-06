@@ -2,7 +2,7 @@
   flake.nixosModules.appsCad = { config, lib, pkgs, ... }:
   let
     # Not in nixpkgs; upstream only ships binaries, so wrap the release AppImage.
-    solidcraft = pkgs.appimageTools.wrapType2 {
+    solidcraftSrc = {
       pname = "solidcraft";
       version = "0.30.1";
       src = pkgs.fetchurl {
@@ -10,6 +10,14 @@
         hash = "sha256-HODWGv04IA8MFieTGgSF8DuD4KiLHHTHXhoVAek4g10=";
       };
     };
+    solidcraftExtracted = pkgs.appimageTools.extract solidcraftSrc;
+    # wrapType2 only installs the binary; copy the launcher entry, icons and mime types from the AppImage.
+    solidcraft = pkgs.appimageTools.wrapType2 (solidcraftSrc // {
+      extraInstallCommands = ''
+        mkdir -p $out/share
+        cp -r --no-preserve=mode ${solidcraftExtracted}/usr/share/{applications,icons,mime} $out/share/
+      '';
+    });
   in {
     options.apps.cad.enable = lib.mkEnableOption "CAD / 3D-printing tools (FreeCAD, OpenSCAD, SolveSpace, KiCad, SolidCraft, Cura, PrusaSlicer)";
 
