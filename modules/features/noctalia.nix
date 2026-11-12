@@ -90,6 +90,15 @@
       # privileged actions); there's no other agent running in the session.
       shell.polkit_agent = true;
 
+      # Session panel (Mod+P) shortcuts are letters instead of the default 1-5.
+      shell.session.actions = [
+        { action = "lock"; shortcut = "l"; }
+        { action = "lock_and_suspend"; shortcut = "s"; }
+        { action = "logout"; shortcut = "o"; }
+        { action = "reboot"; shortcut = "r"; }
+        { action = "shutdown"; shortcut = "d"; variant = "destructive"; }
+      ];
+
       idle = {
         pre_action_fade_seconds = 5.0;
         behavior = {

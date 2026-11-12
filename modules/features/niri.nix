@@ -220,6 +220,7 @@
           "XF86AudioPrev".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg media previous";
 
           "Mod+Shift+A".quit = _: { };
+          "Mod+P".spawn-sh = "${lib.getExe self'.packages.myNoctalia} msg panel-toggle session";
           "Mod+Shift+P".power-off-monitors = _: { };
         };
       };
