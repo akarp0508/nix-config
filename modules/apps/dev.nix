@@ -40,6 +40,12 @@
         # because PlatformIO downloads prebuilt toolchains at runtime. Serial
         # access to boards comes from the dialout group (see host configuration.nix).
         platformio
+        # Native unit tests for firmware logic (pio test -e native).
+        gcc
+        # WebAssembly builds (koiclock's LED core runs in the browser). The
+        # unwrapped clang is needed: nixpkgs' clang wrapper adds host libc flags.
+        llvmPackages.clang-unwrapped
+        llvmPackages.lld
 
         jq
       ];
