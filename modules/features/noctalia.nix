@@ -110,7 +110,11 @@
 
       nightlight = {
         enabled = true;
-        temperature_night = 4515;
+        # force keeps night light on all day; day and night are equal so the
+        # schedule can never shift the temperature.
+        force = true;
+        temperature_day = 4200;
+        temperature_night = 4200;
       };
 
       osd.position = "top_right";
