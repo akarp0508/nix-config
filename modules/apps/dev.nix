@@ -36,6 +36,11 @@
         clang-tools
         pyright
 
+        # Microcontroller firmware (koiclock etc.). The FHS wrapper is needed
+        # because PlatformIO downloads prebuilt toolchains at runtime. Serial
+        # access to boards comes from the dialout group (see host configuration.nix).
+        platformio
+
         jq
       ];
 
