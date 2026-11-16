@@ -141,6 +141,10 @@
 
         input.keyboard.xkb.layout = "pl";
 
+        # libinput accel-speed runs -1..1 (default 0). 0 felt too slow on the
+        # Magic Trackpad and 0.6 too imprecise, so this sits in between.
+        input.touchpad.accel-speed = 0.3;
+
         layout.gaps = 5;
         layout.preset-column-widths = _: {
           content = [
