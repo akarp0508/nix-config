@@ -11,6 +11,7 @@
       self.nixosModules.bootloader
       self.nixosModules.networkmanager
       self.nixosModules.nixLd
+      self.nixosModules.memory
     ];
   };
 }
