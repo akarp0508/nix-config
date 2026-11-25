@@ -12,6 +12,7 @@
       self.nixosModules.networkmanager
       self.nixosModules.nixLd
       self.nixosModules.memory
+      self.nixosModules.bluetooth
     ];
   };
 }
